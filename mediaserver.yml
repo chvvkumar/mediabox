@@ -1,0 +1,17 @@
+---
+- name: Setup host
+  hosts: mediaserver
+  become: yes
+  roles:
+    - {role: setup_host}
+  tags:
+    - host
+
+- name: Setup docker
+  hosts: mediaserver
+  become: yes
+  roles:
+    - {role: setup_docker}
+  tags:
+    - docker
+

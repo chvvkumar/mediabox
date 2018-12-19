@@ -1,0 +1,38 @@
+---
+  - name: Update package list
+    apt: update_cache=yes
+    register: apt_result
+
+  - name: Upgrade APT to the latest packages
+    apt: upgrade=dist
+    register: apt_result
+
+  - name: Install common packages
+    apt:
+      name: "{{ item }}"
+      update_cache: yes
+      cache_valid_time: 86400
+      state: latest
+    with_items:
+      - git
+      - python
+      - python3
+      - python-pip
+      - nfs-common
+      - net-tools
+      - htop
+      - apt-transport-https
+      - ca-certificates
+      - software-properties-common
+      - curl
+      - grep
+      - unzip
+      - zip
+      - nano
+      - grep
+      - open-vm-tools
+
+  - name: Autoremove unused packages
+    apt: autoremove=yes
+#   register: apt_result
+    changed_when: "'packages will be REMOVED' in apt_result.stdout"      
